@@ -45,7 +45,7 @@ echo -e "${YELLOW}[4/5] 配置 Nginx 站点...${NC}"
 sudo tee /etc/nginx/sites-available/${SITE_NAME} > /dev/null << 'NGINX_CONF'
 server {
     listen 80;
-    server_name _;  # 替换为你的域名
+    server_name videos.k2000.xyz;
 
     root /var/www/aiinspire;
     index index.html;
