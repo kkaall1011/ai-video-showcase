@@ -47,6 +47,20 @@ server {
     listen 80;
     server_name videos.k2000.xyz;
 
+    # HTTP → HTTPS 重定向
+    return 301 https://$host$request_uri;
+}
+
+server {
+    listen 443 ssl http2;
+    server_name videos.k2000.xyz;
+
+    # SSL 证书（Certbot 自动填充）
+    ssl_certificate     /etc/letsencrypt/live/videos.k2000.xyz/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/videos.k2000.xyz/privkey.pem;
+    ssl_protocols       TLSv1.2 TLSv1.3;
+    ssl_ciphers         HIGH:!aNULL:!MD5;
+
     root /var/www/aiinspire;
     index index.html;
 
@@ -104,6 +118,7 @@ server {
     add_header X-Frame-Options "SAMEORIGIN" always;
     add_header X-Content-Type-Options "nosniff" always;
     add_header X-XSS-Protection "1; mode=block" always;
+    add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
 }
 NGINX_CONF
 
