@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI灵感视界 - AI短视频作品展</title>
+    <meta name="description" content="展示AI生成的创意短视频，发现AI艺术的无限可能">
+    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="nav-logo">
+                <span class="logo-icon">🎬</span>
+                <span>AI灵感视界</span>
+            </a>
+            <div class="nav-actions">
+                <button class="btn-upload" id="btnUploadNav" title="上传视频">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>上传视频</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero区域 -->
+    <section class="hero">
+        <div class="hero-bg">
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+            <div class="hero-particle"></div>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">
+                AI 创意 <span class="highlight">短视频</span> 展示平台
+            </h1>
+            <p class="hero-subtitle">
+                上传你用AI生成的短视频，与世界分享你的创意<br>
+                发现灵感，展示才华
+            </p>
+            <div class="hero-buttons">
+                <button class="btn btn-primary" id="btnHeroUpload">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    立即上传
+                </button>
+                <button class="btn btn-outline" onclick="document.getElementById('videoWall').scrollIntoView({behavior:'smooth'})">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    浏览视频
+                </button>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <span>向下滚动探索</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </section>
+
+    <!-- 分类导航 -->
+    <section class="category-bar">
+        <div class="category-container">
+            <button class="category-btn active" data-category="all">全部</button>
+            <button class="category-btn" data-category="风景">🏞️ 风景</button>
+            <button class="category-btn" data-category="科幻">🚀 科幻</button>
+            <button class="category-btn" data-category="动物">🐾 动物</button>
+            <button class="category-btn" data-category="抽象">🎨 抽象</button>
+            <button class="category-btn" data-category="人物">👤 人物</button>
+            <button class="category-btn" data-category="动画">✨ 动画</button>
+        </div>
+    </section>
+
+    <!-- 视频展示墙 -->
+    <section class="video-wall" id="videoWall">
+        <div class="video-wall-container">
+            <div class="video-wall-header">
+                <h2>精选视频</h2>
+                <div class="video-sort">
+                    <button class="sort-btn active" data-sort="latest">最新</button>
+                    <button class="sort-btn" data-sort="popular">最热</button>
+                </div>
+            </div>
+            <div class="video-grid" id="videoGrid">
+                <!-- 视频卡片由JS动态生成 -->
+            </div>
+            <div class="load-more" id="loadMore">
+                <button class="btn btn-outline" id="btnLoadMore">加载更多</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 视频播放器弹窗 -->
+    <div class="player-overlay" id="playerOverlay">
+        <div class="player-modal">
+            <button class="player-close" id="playerClose">&times;</button>
+            <div class="player-container">
+                <video id="videoPlayer" controls playsinline>
+                    您的浏览器不支持视频播放
+                </video>
+            </div>
+            <div class="player-info" id="playerInfo">
+                <h3 class="player-title" id="playerTitle"></h3>
+                <p class="player-desc" id="playerDesc"></p>
+                <div class="player-meta">
+                    <span class="player-views" id="playerViews"></span>
+                    <span class="player-date" id="playerDate"></span>
+                    <span class="player-category" id="playerCategory"></span>
+                </div>
+                <div class="player-actions">
+                    <button class="action-btn" id="btnLike" title="点赞">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 9V5a3 3 0 00-3-3l-4 9v11h11.28a2 2 0 002-1.7l1.38-9a2 2 0 00-2-2.3H14z"/></svg>
+                        <span id="likeCount">0</span>
+                    </button>
+                    <button class="action-btn" id="btnShare" title="分享">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+                        <span>分享</span>
+                    </button>
+                    <button class="action-btn" id="btnDownload" title="下载">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        <span>下载</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 分享弹窗 -->
+    <div class="share-overlay" id="shareOverlay">
+        <div class="share-modal">
+            <button class="share-close" id="shareClose">&times;</button>
+            <h3>分享视频</h3>
+            <div class="share-input-group">
+                <input type="text" id="shareUrl" readonly value="">
+                <button class="btn btn-primary" id="btnCopyLink">复制链接</button>
+            </div>
+            <div class="share-social">
+                <button class="share-btn wechat" data-platform="wechat" title="微信">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 01.213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.326.326 0 00.167-.054l1.903-1.114a.864.864 0 01.717-.098 10.16 10.16 0 002.837.403c.276 0 .543-.027.811-.05-.857-2.578.157-4.972 1.932-6.446 1.703-1.415 3.882-1.98 5.853-1.838-.576-3.583-4.196-6.348-8.596-6.348zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178A1.17 1.17 0 014.623 7.17c0-.651.52-1.18 1.162-1.18zm5.813 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 01-1.162 1.178 1.17 1.17 0 01-1.162-1.178c0-.651.52-1.18 1.162-1.18zm3.375 4.781c-.215 0-.43.011-.64.034-1.02.111-1.975.487-2.77 1.104-1.343 1.043-2.098 2.588-1.977 4.154.113 1.47.954 2.694 2.124 3.417l-.382.224a.314.314 0 00-.064.047.316.316 0 00-.024.018l-1.322.774a.178.178 0 01-.091.03c-.09 0-.16-.073-.16-.162 0-.04.014-.078.027-.125l.27-1.028a.326.326 0 00-.118-.365C9.57 18.022 8.76 16.95 8.76 15.73c0-2.336 2.29-4.235 5.107-4.235.36 0 .714.035 1.057.1a6.13 6.13 0 00-.003-.036 5.879 5.879 0 01.05-.79h.001zM13.4 12.87c.567 0 1.028.468 1.028 1.045a1.036 1.036 0 01-1.028 1.044 1.036 1.036 0 01-1.028-1.044c0-.577.461-1.045 1.028-1.045zm4.402 0c.567 0 1.028.468 1.028 1.045a1.036 1.036 0 01-1.028 1.044 1.036 1.036 0 01-1.028-1.044c0-.577.461-1.045 1.028-1.045z"/></svg>
+                    <span>微信</span>
+                </button>
+                <button class="share-btn weibo" data-platform="weibo" title="微博">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M10.098 20.323c-3.977.391-7.414-1.406-7.672-4.02-.259-2.609 2.759-5.047 6.74-5.441 3.979-.394 7.413 1.404 7.671 4.018.259 2.6-2.759 5.049-6.739 5.443zm-3.15-6.86c-.322-.895-2.143-.652-3.148-.275-.26.1-.52.214-.76.34-.198.11-.368.207-.372.295-.023.19.443.417 1.11.585.27.07.562.121.855.158.207.028.414.045.602.045.282-.01.558-.068.816-.16.513-.184.94-.458.897-.989zm2.03 1.69c-.084-.232-.54-.356-.973-.354-.324.003-.643.056-.775.171-.164.144-.154.331.102.507.227.16.57.253.913.268.26.008.49-.039.638-.13.165-.101.174-.262.096-.462zm10.5-8.69c-.01 1.177-.398 2.268-1.092 3.143-.374.47-.83.85-1.349 1.125-.137.074-.274.139-.42.19.214.325.347.709.347 1.13 0 .058-.009.112-.015.166.39.076.786.124 1.189.124 1.73 0 3.14-.63 4.138-1.68.996-1.058 1.446-2.48 1.23-3.95-.197-1.353-1.001-2.442-2.142-2.963-.107.588-.38 1.13-.773 1.563-.478.53-1.05.87-1.66 1.028-.258.064-.505.092-.74.092-.272 0-.507-.046-.72-.13.065.096.12.194.16.302.054.145.08.297.08.455l-.003.007zm-3.69-6.165c-3.226 0-6.148 1.32-7.755 3.426-.58.761-.953 1.61-1.123 2.503-.072.377-.112.755-.112 1.13 0 1.707.62 3.34 1.746 4.598.134.15.274.294.418.432.293.28.617.532.964.75.82.524 1.79.874 2.838 1.012.268.037.543.055.82.055 3.226 0 6.148-1.32 7.755-3.426.58-.761.953-1.61 1.123-2.503.072-.377.112-.755.112-1.13 0-1.707-.62-3.34-1.746-4.598a8.174 8.174 0 00-1.382-1.182c-.82-.524-1.79-.874-2.838-1.012a6.1 6.1 0 00-.82-.055z"/></svg>
+                    <span>微博</span>
+                </button>
+                <button class="share-btn qq" data-platform="qq" title="QQ">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M21.395 15.035a39.548 39.548 0 00-.803-2.264l-1.079-2.695c.001-.032.014-.562.014-.836C19.527 4.661 17.04 0 12 0 6.96 0 4.473 4.66 4.473 9.24c0 .274.013.804.014.836l-1.08 2.695a38.97 38.97 0 00-.802 2.264c-1.021 3.283-1.045 4.956-.044 6.177 1.332 1.626 4.44.965 7.008.273.497-.134 1.005-.263 1.51-.336.314-.05.611-.065.921-.065.31 0 .607.015.921.065.505.073 1.013.202 1.51.336 2.568.692 5.676 1.353 7.008-.273 1.001-1.22.977-2.894-.044-6.177zM12 15.383c-3.324 0-6.022-1.8-6.022-4.022S8.676 7.34 12 7.34s6.022 1.8 6.022 4.022-2.698 4.022-6.022 4.022z"/></svg>
+                    <span>QQ</span>
+                </button>
+                <button class="share-btn link" data-platform="link" title="复制链接">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+                    <span>复制链接</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 上传视频弹窗 -->
+    <div class="upload-overlay" id="uploadOverlay">
+        <div class="upload-modal">
+            <button class="upload-close" id="uploadClose">&times;</button>
+            <h3>上传AI短视频</h3>
+            <form class="upload-form" id="uploadForm">
+                <div class="upload-dropzone" id="dropZone">
+                    <input type="file" id="fileInput" accept="video/*" hidden>
+                    <div class="dropzone-content">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                        <p class="dropzone-text">拖拽视频到此处，或 <span class="dropzone-link">点击上传</span></p>
+                        <p class="dropzone-hint">支持 MP4、WebM 格式，最大 100MB</p>
+                    </div>
+                    <div class="preview-container" id="previewContainer" style="display:none;">
+                        <video id="previewVideo" controls></video>
+                        <button type="button" class="preview-remove" id="previewRemove">重新选择</button>
+                    </div>
+                </div>
+                <div class="upload-fields">
+                    <div class="form-group">
+                        <label for="videoTitle">视频标题 *</label>
+                        <input type="text" id="videoTitle" placeholder="给你的作品起个名字" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="videoDesc">视频描述</label>
+                        <textarea id="videoDesc" placeholder="描述一下这个视频的内容或创作灵感..." rows="3" maxlength="200"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="videoCategory">分类</label>
+                        <select id="videoCategory">
+                            <option value="风景">🏞️ 风景</option>
+                            <option value="科幻">🚀 科幻</option>
+                            <option value="动物">🐾 动物</option>
+                            <option value="抽象">🎨 抽象</option>
+                            <option value="人物">👤 人物</option>
+                            <option value="动画">✨ 动画</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="aiTool">使用的AI工具</label>
+                        <input type="text" id="aiTool" placeholder="如：Sora、Runway、Pika..." maxlength="30">
+                    </div>
+                </div>
+                <div class="upload-progress" id="uploadProgress" style="display:none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <span class="progress-text" id="progressText">上传中...</span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-full" id="btnSubmit">
+                    发布视频
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast提示 -->
+    <div class="toast" id="toast"></div>
+
+    <script src="js/main.js?v=4"></script>
+</body>
+</html>
